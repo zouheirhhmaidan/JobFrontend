@@ -1,14 +1,14 @@
-import { Alert, Button, TextInput } from "evergreen-ui";
-import React, { useState } from "react";
-import "./Main.scss";
 import axios from "axios";
+import { Button, TextInput } from "evergreen-ui";
+import React, { useState } from "react";
 import { GLOBAL_VAR } from "../../../GlobalVar";
-const JobCreation = () => {
+import "./Main.scss";
+
+const JobCreation = (props) => {
   const [form, setForm] = useState({
     name: "",
     lastName: "",
     title: "",
-    description: "",
   });
 
   const [jobData, setJobData] = useState([]);
@@ -19,11 +19,6 @@ const JobCreation = () => {
     { title: "Name", value: form.name, field: "name" },
     { title: "Last name", value: form.lastName, field: "lastName" },
     { title: "Title", value: form.title, field: "title" },
-    {
-      title: "Description",
-      value: form.description,
-      field: "description",
-    },
   ];
 
   const onChange = (value, name) => {
@@ -32,25 +27,8 @@ const JobCreation = () => {
     setForm(temp);
   };
 
-  const getJobById = async (id) => {
-    try {
-      let { data: results } = await axios.get(
-        `${GLOBAL_VAR.BASEURL}/jobs/${id}`
-      );
-
-      if (Object.keys(results).length > 0) {
-        setJobData(results);
-      } else {
-        throw Error;
-      }
-    } catch (err) {
-      alert("Oops! Something went wrong, please contact your admin.");
-    }
-  };
-
   const checkRequired = () => {
     if (
-      form.description.length == 0 ||
       form.name.length == 0 ||
       form.lastName.length == 0 ||
       form.title.length == 0
@@ -68,35 +46,18 @@ const JobCreation = () => {
         name: form.name,
         lastName: form.lastName,
         title: form.title,
-        description: form.description,
       };
-      //   const { data: pending } = await axios.get(
-      //     "https://api.unsplash.com/photos/random?query=food&pages=1",
-      //     {
-      //       headers: {
-      //         Authorization: `Client-ID ${GLOBAL_VAR.ACCESS_KEY}`,
-      //       },
-      //     }
-      //   );
-      let pending = { links: { self: "https://hnasdbfjna" } };
       let { data: JobCreation } = await axios.post(
         `${GLOBAL_VAR.BASEURL}/jobs`,
-        {
-          ...body,
-          image: pending.links.self,
-        }
+        body
       );
-
-      if (JobCreation?.id) {
-        getJobById(JobCreation.id);
-      } else {
-        throw Error;
-      }
+      console.log(JobCreation);
     } catch (err) {
       console.log(err);
       alert("Oops! Please check your internet conneciton.");
     } finally {
       setPending(false);
+      props.setIsShown(false);
     }
   };
 
@@ -119,12 +80,10 @@ const JobCreation = () => {
             className="buttonPrimary"
             onClick={checkRequired}
             isLoading={pending}
-            style={{ backgroundColor: "#1591ea", color: "white" }}
           >
             {pending ? "Creating" : "Create"}
           </Button>
         </div>
-        {pending && <p className="pendingText">Your job is pending...</p>}
       </div>
     </div>
   );

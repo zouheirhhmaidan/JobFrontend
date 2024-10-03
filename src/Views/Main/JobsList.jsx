@@ -1,16 +1,40 @@
-import React, { useState } from "react";
-import "./Main.scss";
-import { Dialog } from "evergreen-ui";
+import { Button, Dialog } from "evergreen-ui";
+import React, { useEffect, useState } from "react";
 import JobCreation from "./JobCreation";
+import "./Main.scss";
+
+import axios from "axios";
+import { GLOBAL_VAR } from "../../../GlobalVar";
+import JobsListComp from "./JobsListComp";
 const JobsList = () => {
   const [isShown, setIsShown] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getJobs();
+  }, [isShown]);
+
+  const getJobs = async () => {
+    try {
+      const { data: jobs } = await axios.get(`${GLOBAL_VAR.BASEURL}/jobs`);
+      if (jobs.length > 0) {
+        setData(jobs);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="mainPage">
       <div className="rowBetween">
-        <h1>Welcome, here is the list in all jobs created by our clients </h1>
-        <button className="buttonPrimary" onClick={() => setIsShown(true)}>
+        <h1>
+          Welcome, here is the list of jobs created by our clients{" "}
+          <span style={{ color: GLOBAL_VAR.BLUE_COLOR }}>
+            ( {data.length} ){" "}
+          </span>
+        </h1>
+        <Button className="buttonPrimary" onClick={() => setIsShown(true)}>
           Create a Job
-        </button>
+        </Button>
       </div>
       <Dialog
         isShown={isShown}
@@ -18,8 +42,9 @@ const JobsList = () => {
         onCloseComplete={() => setIsShown(false)}
         hasFooter={false}
       >
-        <JobCreation />
+        <JobCreation setIsShown={setIsShown} />
       </Dialog>
+      <JobsListComp data={data} />
     </div>
   );
 };
