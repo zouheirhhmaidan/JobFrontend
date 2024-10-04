@@ -24,6 +24,8 @@ const JobCard = ({ item }) => {
       <p className="jobTitleText">{item.title}</p>
       {item.status === "pending" ? (
         <p className="loadingText">Image {item.status}...</p>
+      ) : item.status === "Error" ? (
+        <p className="loadingText">Image failed, please contact admin.</p>
       ) : (
         <>
           {!imageLoaded && <p className="loadingText">Loading image...</p>}

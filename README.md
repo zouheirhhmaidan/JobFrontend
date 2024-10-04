@@ -1,10 +1,18 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description:
 
-Currently, two official plugins are available:
+1- I used Vite because by combining React and Vite, i get a fast development environment that allows me to instantly visualize changes in the browser, it eliminates the waiting time between making a code change and seeing the result.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2- Kindle run "npm install" and "npm run dev" to start the project
 
-Total, 2 hours + debugging
+3- The following are what i have used to complete this project:
+
+    - React hooks to store the input data in a state
+    - Evergreen UI library for UI elements
+    - Axios to communicate between services
+
+4- I have stored variables that i use more often in a file called GlobalVar.js
+
+Thanks for your time!
+Zouheir Hmaidan

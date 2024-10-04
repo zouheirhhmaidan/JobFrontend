@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Button, TextInput } from "evergreen-ui";
-import React, { useState } from "react";
+import { useState } from "react";
 import { GLOBAL_VAR } from "../../../GlobalVar";
 import "./Main.scss";
 
@@ -10,8 +10,6 @@ const JobCreation = (props) => {
     lastName: "",
     title: "",
   });
-
-  const [jobData, setJobData] = useState([]);
 
   const [pending, setPending] = useState(false);
 
