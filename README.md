@@ -14,5 +14,7 @@ Description:
 
 4- I have stored variables that i use more often in a file called GlobalVar.js
 
+NOTE: - Total time spent on this application (frontend): 1.5 hours including debugging
+
 Thanks for your time!
 Zouheir Hmaidan
